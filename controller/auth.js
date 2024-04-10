@@ -42,6 +42,47 @@ const createUser = async( req, res = response ) => {
     }
 }
 
+const loginUser = async( req, res = response ) => {
+    try {
+        const { email, password} = req.body
+    
+        const user = await User.findOne({email: email})
+        if (!user) {
+            return res.status(400).json({
+                ok: false,
+                message: 'No hay ningún usuario registrado con este Email',
+            })
+        }
+        
+        // Verificar password
+        const validatePassword = await bcrypt.compareSync( password, user.password)
+
+        if (!validatePassword) {
+            return res.status(400).json({
+                ok: false,
+                message: 'Password Incorrecto',
+            })    
+        }
+
+        const token = await generateJWT( user.id, user.name);
+        
+        res.status(200).json({
+            ok: true,
+            message: 'Login',
+            uid: user.id,
+            name: user.name,
+            token
+        })
+        
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            message: 'Por favor hable con el administrador',
+        })   
+    }
+}
+
 module.exports = {
     createUser,
+    loginUser
 }
