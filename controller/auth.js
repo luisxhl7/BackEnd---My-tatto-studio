@@ -95,7 +95,23 @@ const loginUser = async( req, res = response ) => {
     }
 }
 
+const RenewToken = async( req, res = response ) => {
+    const uid = req.uid
+    const name = req.name
+
+    const token = await generateJWT( uid, name );
+
+    res.status(200).json({
+        status: 200,
+        message: 'Renew success',
+        uid,
+        name,
+        token: token
+    })
+}
+
 module.exports = {
     createUser,
-    loginUser
+    loginUser,
+    RenewToken
 }
