@@ -16,7 +16,7 @@ const createUser = async( req, res = response ) => {
             })
         }
         
-        user = new User(req.body)
+        user = new User( req.body )
         
         // Encrypt password 
         const salt = bcrypt.genSaltSync()
@@ -51,39 +51,45 @@ const createUser = async( req, res = response ) => {
 
 const loginUser = async( req, res = response ) => {
     try {
-        const { email, password} = req.body
+        const { email, password } = req.body
     
-        const user = await User.findOne({email: email})
+        const user = await User.findOne({ email: email })
         if (!user) {
             return res.status(400).json({
-                ok: false,
+                status: 400,
                 message: 'No hay ningún usuario registrado con este Email',
             })
         }
         
         // Verificar password
-        const validatePassword = await bcrypt.compareSync( password, user.password)
+        const validatePassword = await bcrypt.compareSync( password, user.password )
 
         if (!validatePassword) {
             return res.status(400).json({
-                ok: false,
-                message: 'Password Incorrecto',
+                status: 400,
+                message: 'Contraseña incorrecta',
             })    
         }
 
-        const token = await generateJWT( user.id, user.name);
+        const token = await generateJWT( user.id, user.name );
         
         res.status(200).json({
-            ok: true,
-            message: 'Login',
-            uid: user.id,
-            name: user.name,
-            token
+            status: 200,
+            message: 'Login exitoso',
+            user: {
+                uid: user.id,
+                name: user.name,
+                lastName: user.lastName,
+                email: user.email,
+                document: user.document,
+                numberPhone: user.numberPhone,
+                token: token
+            },
         })
         
     } catch (error) {
         res.status(500).json({
-            ok: false,
+            status: 500,
             message: 'Por favor hable con el administrador',
         })   
     }
