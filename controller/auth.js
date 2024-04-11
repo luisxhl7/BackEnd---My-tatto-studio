@@ -7,10 +7,11 @@ const createUser = async( req, res = response ) => {
     try {
         const { email, password } = req.body
         
-        let user = await User.findOne({email: email})
+        let user = await User.findOne({ email: email })
+
         if ( user ) {
             return res.status(400).json({
-                ok: false,
+                status: 400,
                 message: 'Este correo ya esta registrado',
             })
         }
@@ -23,21 +24,27 @@ const createUser = async( req, res = response ) => {
 
         await user.save()
 
-        // Generar JWT
-        const token = await generateJWT( user.id, user.name);
+        // Generate JWT
+        const token = await generateJWT( user.id, user.name );
     
         res.status(201).json({
-            ok: true,
-            message: 'Register success',
-            uid: user.id,
-            name: user.name,
-            token: token
+            status: 201,
+            message: 'Registro exitoso',
+            user: {
+                uid: user.id,
+                name: user.name,
+                lastName: user.lastName,
+                email: user.email,
+                document: user.document,
+                numberPhone: user.numberPhone,
+                token: token
+            },
         })
 
     } catch (error) {
         res.status(500).json({
-            ok: false,
-            message: 'Por favor hable con el administrador',
+            status: 500,
+            message: 'Error interno de servidor',
         })      
     }
 }

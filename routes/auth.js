@@ -6,24 +6,23 @@ const { validateFields } = require('../middlewares/validate-fields');
 
 const router = Router();
 
-router.post(
-    '/',
+router.post('/',
     [
         check('email', 'El email es obligatorio').not().isEmpty(),
-        check('password', 'El password debe ser mayor a 6 caracteres').isLength({ min: 6}),
+        check('password', 'El password debe ser mayor a 5 caracteres').isLength({ min: 6}),
         validateFields
     ], 
     loginUser
 )
 
-router.post(
-    '/register', 
+router.post('/register', 
     [
         check('name', 'El nombre es obligatorio').not().isEmpty(),
-        check('lastName', 'El nombre es obligatorio').not().isEmpty(),
-        check('numberPhone', 'El nombre es obligatorio').not().isEmpty(),
+        check('lastName', 'El apellido es obligatorio').not().isEmpty(),
+        check('numberPhone', 'El teléfono es obligatorio').not().isEmpty(),
         check('email', 'El email es obligatorio').not().isEmpty(),
-        check('password', 'El password es obligatorio').not().isEmpty(),
+        check('document', 'El documento es obligatorio').not().isEmpty().isLength({ min: 10}),
+        check('password', 'La contraseña es obligatorio y debe ser mayor a 5 caracteres').not().isEmpty().isLength({ min: 6}),
         validateFields
     ], 
     createUser

@@ -18,6 +18,10 @@ const UserSchema = Schema({
         required: true,
         unique: true,
     },
+    document:{
+        type: Number,
+        required: true,
+    },
     password:{
         type: String,
         required: true,
