@@ -20,9 +20,9 @@ router.post('/register',
     [
         check('name', 'El nombre es obligatorio').not().isEmpty(),
         check('lastName', 'El apellido es obligatorio').not().isEmpty(),
-        check('numberPhone', 'El teléfono es obligatorio').not().isEmpty(),
+        check('numberPhone', 'El teléfono es obligatorio').not().isEmpty().isLength({ min: 10, max: 10}),
         check('email', 'El email es obligatorio').not().isEmpty(),
-        check('document', 'El documento es obligatorio').not().isEmpty().isLength({ min: 10}),
+        check('document', 'El documento es obligatorio').not().isEmpty().isLength({ min: 9, max: 11 }),
         check('password', 'La contraseña es obligatorio y debe ser mayor a 5 caracteres').not().isEmpty().isLength({ min: 6}),
         validateFields
     ], 
