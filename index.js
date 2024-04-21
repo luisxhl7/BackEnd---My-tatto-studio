@@ -20,6 +20,7 @@ app.use( express.static('public') );
 
 // Rutas
 app.use('/api/v1/auth', require('./routes/auth'));
+app.use('/api/v1/agenda', require('./routes/agenda'));
 
 // Escuchar peticiones
 app.listen( process.env.PORT, () => {
