@@ -9,6 +9,10 @@ const AgendaCalendarSchema = Schema({
         type: String,
         required: true
     },
+    appointmentType:{
+        type: String,
+        required: true
+    },
     description:{
         type: String,
     },

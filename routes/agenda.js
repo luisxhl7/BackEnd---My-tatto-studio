@@ -15,6 +15,7 @@ router.post(
     '/',
     [
         check('title', 'El nombre es obligatorio').not().isEmpty(),
+        check('appointmentType', 'El tipo de cita es obligatorio').not().isEmpty(),
         check('nameArtist', 'El nameArtist es obligatorio').not().isEmpty(),
         check('dateInit', 'La fecha de inicio es obligatorio').custom( isDate ),
         check('dateEnd', 'La fecha de final es obligatorio').custom( isDate ),
