@@ -45,6 +45,27 @@ const getAppointments = async (req, res = response) => {
     }
 };
 
+const getAppointmentsByTattooArtist = async (req, res = response) => {
+    try {
+        const tattooArtist = req.params.id
+        const appointments = await AgendaCalendar.find({ nameArtist: tattooArtist });
+
+        res.status(200).json({
+            status: 200,
+            message: 'Lista de citas obtenida exitosamente',
+            Appointments: appointments
+        });
+        
+    } catch (error) {
+        console.error('Error al obtener la lista de citas:', error);
+        res.status(500).json({
+            status: 500,
+            message: 'Ocurrió un error al obtener la lista de citas. Por favor, contacte al administrador para más ayuda.',
+            error: error.message
+        });
+    }
+};
+
 const deleteAppointment = async( req, res = response ) => {
 
     const appointmentId = req.params.id
@@ -133,5 +154,6 @@ module.exports = {
     createAppointment,
     getAppointments,
     deleteAppointment,
-    updateAppointment
+    updateAppointment,
+    getAppointmentsByTattooArtist
 }

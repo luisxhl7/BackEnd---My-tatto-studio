@@ -1,7 +1,7 @@
 const { Router } = require('express');
 
 const { validateJWT } = require('../middlewares/validate-jwt');
-const { createAppointment, getAppointments, deleteAppointment, updateAppointment } = require('../controller/agenda');
+const { createAppointment, getAppointments, deleteAppointment, updateAppointment, getAppointmentsByTattooArtist } = require('../controller/agenda');
 const { validateFields } = require('../middlewares/validate-fields');
 const { check } = require('express-validator');
 const { isDate } = require('../helpers/isDate');
@@ -27,6 +27,11 @@ router.post(
 router.get(
     '/',
     getAppointments
+)
+
+router.get(
+    '/:id',
+    getAppointmentsByTattooArtist
 )
 
 router.delete(
